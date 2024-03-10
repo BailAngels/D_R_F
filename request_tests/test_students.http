@@ -11,23 +11,3 @@
 #GET http://localhost:8000/api/v1/students/2
 #Accept: application/json
 
-
-#Получение списка фруктов
-#GET http://localhost:8000/api/v1/fruits
-#Accept: application/json
-
-
-#создание фрукта
-#POST http://localhost:8000/api/v1/create_fruit/
-#Accept: application/json
-#
-#{
-#"id":5,
-#"name":"banana",
-#"price":130
-#}
-
-
-#детали фрукта
-GET http://localhost:8000/api/v1/fruits/1
-Accept: application/json
