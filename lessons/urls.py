@@ -1,11 +1,18 @@
 from django.urls import path
 
 from lessons.views import (
-    students, create_student, detail_student,
+    lesson_list,
+    lesson_create,
+    lesson_update,
+    lesson_patrial_update,
+    lesson_delete
 )
 
 urlpatterns = [
-    path('students/', students),
-    path('students/<int:pk>', detail_student),
-    path('create/', create_student),
+    path('lessons/', lesson_list),
+    path('lessons/<int:pk>/', lesson_list),
+    path('lessons/create/', lesson_create),
+    path('lessons/update/<int:pk>/', lesson_update),
+    path('lessons/pr-update/<int:pk>/', lesson_patrial_update),
+    path('lessons/delete/<int:pk>/', lesson_delete)
 ]

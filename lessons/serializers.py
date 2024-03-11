@@ -1,8 +1,14 @@
 from rest_framework import serializers
 
+from lessons.models import Lesson
 
-class StudentSerializer(serializers.Serializer):
-    id = serializers.UUIDField()
-    name = serializers.CharField()
-    age = serializers.IntegerField()
-    is_genius = serializers.BooleanField()
+
+class LessonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lesson
+        fields = (
+            'id',
+            'title',
+            'subject',
+            'plan'
+        )

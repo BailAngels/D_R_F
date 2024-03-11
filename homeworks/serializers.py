@@ -1,7 +1,13 @@
 from rest_framework import serializers
 
+from homeworks.models import Fruits
 
-class FruitSerializer(serializers.Serializer):
-    id = serializers.UUIDField()
-    name = serializers.CharField()
-    price = serializers.IntegerField()
+
+class FruitsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fruits
+        fields = (
+            'id',
+            'title',
+            'price'
+        )

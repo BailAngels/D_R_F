@@ -1,36 +1,76 @@
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.request import Request
 
-
-from homeworks.serializers import FruitSerializer
-
-
-fruits_list = [
-    {'id': 1, 'name': 'Apple', 'price': 100},
-    {'id': 2, 'name': 'Strawberry', 'price': 110},
-    {'id': 3, 'name': 'Pear', 'price': 200},
-]
+from homeworks.serializers import FruitsSerializer
+from homeworks.models import Fruits
 
 
 @api_view(http_method_names=['GET'])
-def fruits(request: Request):
-    serializer = FruitSerializer(data=fruits_list, many=True)
-    if serializer.is_valid():
-        return Response(serializer.data, status=200)
-    else:
-        return Response({'error': 'No Validate Data'}, status=404)
+def fruits_list(request: Request, pk=None):
+    if pk:
+        data = Fruits.objects.get(pk=pk)
+        serializer = FruitsSerializer(instance=data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    data = Fruits.objects.all()
+    serializer = FruitsSerializer(data, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(http_method_names=['POST'])
-def create_fruit(request: Request):
-    data = request.data
-    fruits_list.append(data)
-    return Response(fruits_list, status=201)
+def fruits_create(request:Request):
+    title, price = request.data['title'], request.data['price']
+    data = Fruits.objects.create(title=title, price=price)
+    serializer = FruitsSerializer(instance=data)
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-@api_view(http_method_names=['GET'])
-def detail_fruit(request: Request, pk: int):
-    fruit = [i for i in fruits_list if i['id'] == pk]
-    data = FruitSerializer(data=fruit).initial_data
-    return Response(data, status=200)
+@api_view(http_method_names=['PUT'])
+def fruits_update(request: Request, pk):
+    title, price = request.data['title'], request.data['price']
+
+    data = Fruits.objects.get(id=pk)
+    data.title = title
+    data.price = price
+    data.save()
+    allfruits = Fruits.objects.all()
+    serializer = FruitsSerializer(instance=allfruits, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(http_method_names=['PATCH'])
+def fruits_patrial_update(request: Request, pk):
+    try:
+        title = request.data['title']
+    except KeyError:
+        title = None
+
+    try:
+        price = request.data['price']
+    except KeyError:
+        price = None
+
+    data = Fruits.objects.get(id=pk)
+
+    if title:
+        data.title = title
+        data.save()
+
+    if price:
+        data.price = price
+        data.save()
+
+    serializer = FruitsSerializer(instance=data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(http_method_names=['DELETE'])
+def fruits_delete(request: Request, pk):
+    fruit = Fruits.objects.get(id=pk)
+    fruit.delete()
+
+    data = Fruits.objects.all()
+    serializer = FruitsSerializer(instance=data, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)

@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from homeworks.models import Fruits
+
+
+@admin.register(Fruits)
+class FruitsAdmin(admin.ModelAdmin):
+    list_display = ['title']
+    search_fields = ['title']

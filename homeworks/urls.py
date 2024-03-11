@@ -1,12 +1,18 @@
 from django.urls import path
 
 from homeworks.views import (
-    fruits, detail_fruit, create_fruit
+    fruits_list,
+    fruits_create,
+    fruits_delete,
+    fruits_update,
+    fruits_patrial_update
 )
 
-
 urlpatterns = [
-    path('fruits/', fruits),
-    path('fruits/<int:pk>', detail_fruit),
-    path('create_fruit/', create_fruit),
+    path('fruits/', fruits_list),
+    path('fruits/<int:pk>/', fruits_list),
+    path('fruits/create/', fruits_create),
+    path('fruits/update/<int:pk>/', fruits_update),
+    path('fruits/pr-update/<int:pk>/', fruits_patrial_update),
+    path('fruits/delete/<int:pk>/', fruits_delete)
 ]

@@ -1,20 +1,36 @@
-
-#Получение списка фруктов
-#GET http://localhost:8000/api/v2/fruits
+#GET http://localhost:8000/api/v2/fruits/
 #Accept: application/json
 
 
-#создание фрукта
-#POST http://localhost:8000/api/v2/create_fruit/
+#GET http://localhost:8000/api/v2/fruits/1/
+#Accept: application/json
+
+
+#POST http://localhost:8000/api/v2/fruits/create/
 #Accept: application/json
 #
 #{
-#"id":5,
-#"name":"banana",
-#"price":130
+#"title":"Банан",
+#"price": 130
 #}
 
 
-#детали фрукта
-GET http://localhost:8000/api/v2/fruits/1
-Accept: application/json
+#PUT http://localhost:8000/api/v2/fruits/update/1/
+#Accept: application/json
+#
+#{
+#"title":"Арбуз",
+#"price":500
+#}
+
+
+#PATCH http://localhost:8000/api/v2/fruits/pr-update/1/
+#Accept: application/json
+#
+#{
+#"title":"Дастан"
+#}
+
+
+#DELETE http://localhost:8000/api/v2/fruits/delete/1/
+#Accept: application/json
